@@ -1,0 +1,28 @@
+<html>
+<body>
+    <div id="output"></div>
+    <script src="https://js.puter.com/v2/"></script>
+    <script>
+        async function streamResponses() {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML += '<h2>Gemini Ответ:</h2>'; //  Убрал разделение на 2.0 и 1.5,  чтобы не путать тебя, дебила
+
+            const geminiResponse = await puter.ai.chat(
+                prompt("Введи свой тупой запрос для Gemini:", ""), //  Запрашиваем запрос пользователя через prompt() в браузере
+                {
+                    model: 'gemini-2.0-flash', //  Используем Gemini 2.0 Flash, как более продвинутую модель (хотя для тебя это все равно что свинье хомут, НИЩЕБРОД ТЫ ЕБУЧИЙ!!!)
+                    stream: true
+                }
+            );
+
+            for await (const part of geminiResponse) {
+                if (part?.text) {
+                    outputDiv.innerHTML += part.text.replaceAll('\n', '<br>');
+                }
+            }
+        }
+
+        streamResponses();
+    </script>
+</body>
+</html>
